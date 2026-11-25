@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WalletBoard | Controle financeiro</title>
+  <meta name="description" content="Registre entradas e saídas, veja seus gastos por categoria e acompanhe o saldo.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&family=DM+Mono:wght@500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topo">
+    <div class="marca">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="8" width="26" height="18" rx="4" fill="currentColor"/><rect x="19" y="14" width="10" height="6" rx="2" fill="#fff"/><circle cx="23" cy="17" r="1.6" fill="currentColor"/><path d="M7 8l14-4 2 4" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+      WalletBoard
+    </div>
+    <div class="mes" role="group" aria-label="Mês">
+      <button class="seta" id="mes-ant" aria-label="Mês anterior">‹</button>
+      <strong id="mes-nome"></strong>
+      <button class="seta" id="mes-prox" aria-label="Próximo mês">›</button>
+    </div>
+    <button class="btn btn--principal" id="abrir-nova">+ Nova transação</button>
+  </header>
+
+  <main class="painel">
+    <section class="cards" aria-label="Resumo do mês">
+      <article class="card card--saldo">
+        <span>Saldo disponível</span>
+        <strong id="saldo">R$ 0,00</strong>
+        <small id="saldo-info">acumulado até o fim do mês</small>
+      </article>
+      <article class="card">
+        <span>Entradas do mês</span>
+        <strong class="pos" id="entradas">R$ 0,00</strong>
+        <small id="var-entradas"></small>
+      </article>
+      <article class="card">
+        <span>Saídas do mês</span>
+        <strong class="neg" id="saidas">R$ 0,00</strong>
+        <small id="var-saidas"></small>
+      </article>
+      <article class="card">
+        <span>Economia do mês</span>
+        <strong id="economia">0%</strong>
+        <small>da renda guardada</small>
+      </article>
+    </section>
+
+    <section class="graficos">
+      <article class="bloco">
+        <h2>Gastos por categoria</h2>
+        <div class="rosca">
+          <svg id="rosca" viewBox="0 0 200 200" role="img" aria-label="Gráfico de gastos por categoria"></svg>
+          <ul class="legenda" id="legenda"></ul>
+        </div>
+      </article>
+      <article class="bloco">
+        <h2>Últimos 6 meses</h2>
+        <div class="barras" id="barras"></div>
+        <p class="chave"><span class="ponto ponto--ent"></span>Entradas <span class="ponto ponto--sai"></span>Saídas</p>
+      </article>
+    </section>
+
+    <section class="bloco">
+      <div class="bloco__topo">
+        <h2>Transações</h2>
+        <div class="filtros">
+          <select id="filtro-tipo" aria-label="Filtrar por tipo">
+            <option value="todas">Todas</option>
+            <option value="entrada">Entradas</option>
+            <option value="saida">Saídas</option>
+          </select>
+          <input id="busca" type="search" placeholder="Buscar" aria-label="Buscar transação">
+        </div>
+      </div>
+      <div class="tabela-wrap">
+        <table class="tabela">
+          <thead><tr><th>Data</th><th>Descrição</th><th>Categoria</th><th class="num">Valor</th><th><span class="sr">Ações</span></th></tr></thead>
+          <tbody id="corpo"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <dialog class="modal" id="modal">
+    <form id="form" novalidate>
+      <h2 id="modal-titulo">Nova transação</h2>
+      <div class="tipo" role="radiogroup" aria-label="Tipo">
+        <label><input type="radio" name="tipo" value="saida" checked><span>Saída</span></label>
+        <label><input type="radio" name="tipo" value="entrada"><span>Entrada</span></label>
+      </div>
+      <label>Valor (R$)<input id="f-valor" inputmode="decimal" placeholder="0,00" required></label>
+      <label>Descrição<input id="f-desc" type="text" maxlength="60" placeholder="Ex.: Mercado do mês" required></label>
+      <div class="linha">
+        <label>Categoria<select id="f-cat"></select></label>
+        <label>Data<input id="f-data" type="date" required></label>
+      </div>
+      <p class="erro" id="erro" role="alert"></p>
+      <div class="modal__acoes">
+        <button type="button" class="btn btn--fantasma" id="cancelar">Cancelar</button>
+        <button type="submit" class="btn btn--principal">Salvar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
